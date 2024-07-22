@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Photon.Pun;
 
-public class PlayerInventory : MonoBehaviour
+public class PlayerInventory : MonoBehaviourPunCallbacks
 {
     public int NumberOfCristals {  get; set; }
 
@@ -11,7 +12,10 @@ public class PlayerInventory : MonoBehaviour
 
     public void CristalCollected()
     {
-        NumberOfCristals++;
-        OnCristalCollected.Invoke(this);
+        if (photonView.IsMine)
+        {
+            NumberOfCristals++;
+            OnCristalCollected.Invoke(this);
+        }
     }
 }
